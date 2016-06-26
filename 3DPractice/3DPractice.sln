@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DPractice", "3DPractice\3DPractice.csproj", "{ECB37AC3-9EBB-4700-B534-305B520DB533}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ECB37AC3-9EBB-4700-B534-305B520DB533}.Debug|x86.ActiveCfg = Debug|x86
+		{ECB37AC3-9EBB-4700-B534-305B520DB533}.Debug|x86.Build.0 = Debug|x86
+		{ECB37AC3-9EBB-4700-B534-305B520DB533}.Release|x86.ActiveCfg = Release|x86
+		{ECB37AC3-9EBB-4700-B534-305B520DB533}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
