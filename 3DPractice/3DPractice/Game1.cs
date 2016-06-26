@@ -20,11 +20,9 @@ namespace _3DPractice
         BasicEffect basicEffect;
 
         // Geometric Info
-        VertexPositionColor[] cube; // position and color of trangle's vertices
-        VertexBuffer vertexBuffer;              // use to draw to graphics card
-
-        // Orbit
-        bool orbit;
+        VertexPositionColor[,] cube; // position and color of trangle's vertices
+        VertexPositionColor[] cubeTriangulated;
+        VertexBuffer vertexBuffer;  // use to draw to graphics card
 
         public Game1()
         {
@@ -55,65 +53,111 @@ namespace _3DPractice
             basicEffect.LightingEnabled = false;
 
             // create triangle
-            cube = new VertexPositionColor[8];
-            cube[0] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Red);
-            cube[1] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Orange);
-            cube[2] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Yellow);
-            cube[3] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Green);
-            cube[4] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Teal);
-            cube[5] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Blue);
-            cube[6] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Purple);
-            cube[7] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.DarkRed);
+            cube = new VertexPositionColor[8,6];
+            cube[0, 0] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Red);
+            cube[0, 1] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Orange);
+            cube[0, 2] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Yellow);
+            cube[0, 3] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Green);
+            cube[0, 4] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Blue);
+            cube[0, 5] = new VertexPositionColor(new Vector3(20, 20, 20), Color.Purple);
 
-            VertexPositionColor[] cubeTriangulated = new VertexPositionColor[36];
+            cube[1, 0] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Red);
+            cube[1, 1] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Orange);
+            cube[1, 2] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Yellow);
+            cube[1, 3] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Green);
+            cube[1, 4] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Blue);
+            cube[1, 5] = new VertexPositionColor(new Vector3(20, 20, -20), Color.Purple);
 
-            cubeTriangulated[0] = cube[0];
-            cubeTriangulated[1] = cube[1];
-            cubeTriangulated[2] = cube[3];
+            cube[2, 0] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Red);
+            cube[2, 1] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Orange);
+            cube[2, 2] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Yellow);
+            cube[2, 3] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Green);
+            cube[2, 4] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Blue);
+            cube[2, 5] = new VertexPositionColor(new Vector3(20, -20, 20), Color.Purple);
 
-            cubeTriangulated[3] = cube[0];
-            cubeTriangulated[4] = cube[2];
-            cubeTriangulated[5] = cube[3];
+            cube[3, 0] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Red);
+            cube[3, 1] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Orange);
+            cube[3, 2] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Yellow);
+            cube[3, 3] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Green);
+            cube[3, 4] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Blue);
+            cube[3, 5] = new VertexPositionColor(new Vector3(20, -20, -20), Color.Purple);
 
-            cubeTriangulated[6] = cube[0];
-            cubeTriangulated[7] = cube[1];
-            cubeTriangulated[8] = cube[5];
+            cube[4, 0] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Red);
+            cube[4, 1] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Orange);
+            cube[4, 2] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Yellow);
+            cube[4, 3] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Green);
+            cube[4, 4] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Blue);
+            cube[4, 5] = new VertexPositionColor(new Vector3(-20, 20, 20), Color.Purple);
 
-            cubeTriangulated[9] = cube[0];
-            cubeTriangulated[10] = cube[4];
-            cubeTriangulated[11] = cube[5];
+            cube[5, 0] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Red);
+            cube[5, 1] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Orange);
+            cube[5, 2] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Yellow);
+            cube[5, 3] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Green);
+            cube[5, 4] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Blue);
+            cube[5, 5] = new VertexPositionColor(new Vector3(-20, 20, -20), Color.Purple);
 
-            cubeTriangulated[12] = cube[0];
-            cubeTriangulated[13] = cube[2];
-            cubeTriangulated[14] = cube[6];
+            cube[6, 0] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Red);
+            cube[6, 1] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Orange);
+            cube[6, 2] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Yellow);
+            cube[6, 3] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Green);
+            cube[6, 4] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Blue);
+            cube[6, 5] = new VertexPositionColor(new Vector3(-20, -20, 20), Color.Purple);
 
-            cubeTriangulated[15] = cube[0];
-            cubeTriangulated[16] = cube[4];
-            cubeTriangulated[17] = cube[6];
+            cube[7, 0] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Red);
+            cube[7, 1] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Orange);
+            cube[7, 2] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Yellow);
+            cube[7, 3] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Green);
+            cube[7, 4] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Blue);
+            cube[7, 5] = new VertexPositionColor(new Vector3(-20, -20, -20), Color.Purple);
 
-            cubeTriangulated[18] = cube[7];
-            cubeTriangulated[19] = cube[6];
-            cubeTriangulated[20] = cube[2];
+            cubeTriangulated = new VertexPositionColor[36];
+            cubeTriangulated[0] = cube[0, 0];
+            cubeTriangulated[1] = cube[1, 0];
+            cubeTriangulated[2] = cube[3, 0];
 
-            cubeTriangulated[21] = cube[7];
-            cubeTriangulated[22] = cube[3];
-            cubeTriangulated[23] = cube[2];
+            cubeTriangulated[3] = cube[0, 0];
+            cubeTriangulated[4] = cube[2, 0];
+            cubeTriangulated[5] = cube[3, 0];
 
-            cubeTriangulated[24] = cube[7];
-            cubeTriangulated[25] = cube[6];
-            cubeTriangulated[26] = cube[4];
+            cubeTriangulated[6] = cube[0, 1];
+            cubeTriangulated[7] = cube[1, 1];
+            cubeTriangulated[8] = cube[5, 1];
 
-            cubeTriangulated[27] = cube[7];
-            cubeTriangulated[28] = cube[5];
-            cubeTriangulated[29] = cube[4];
+            cubeTriangulated[9] = cube[0, 1];
+            cubeTriangulated[10] = cube[4, 1];
+            cubeTriangulated[11] = cube[5, 1];
 
-            cubeTriangulated[30] = cube[7];
-            cubeTriangulated[31] = cube[5];
-            cubeTriangulated[32] = cube[1];
+            cubeTriangulated[12] = cube[0, 2];
+            cubeTriangulated[13] = cube[2, 2];
+            cubeTriangulated[14] = cube[6, 2];
 
-            cubeTriangulated[33] = cube[7];
-            cubeTriangulated[34] = cube[3];
-            cubeTriangulated[35] = cube[1];
+            cubeTriangulated[15] = cube[0, 2];
+            cubeTriangulated[16] = cube[4, 2];
+            cubeTriangulated[17] = cube[6, 2];
+
+            cubeTriangulated[18] = cube[7, 3];
+            cubeTriangulated[19] = cube[6, 3];
+            cubeTriangulated[20] = cube[2, 3];
+
+            cubeTriangulated[21] = cube[7, 3];
+            cubeTriangulated[22] = cube[3, 3];
+            cubeTriangulated[23] = cube[2, 3];
+
+            cubeTriangulated[24] = cube[7, 4];
+            cubeTriangulated[25] = cube[6, 4];
+            cubeTriangulated[26] = cube[4, 4];
+
+            cubeTriangulated[27] = cube[7, 4];
+            cubeTriangulated[28] = cube[5, 4];
+            cubeTriangulated[29] = cube[4, 4];
+
+            cubeTriangulated[30] = cube[7, 5];
+            cubeTriangulated[31] = cube[5, 5];
+            cubeTriangulated[32] = cube[1, 5];
+
+            cubeTriangulated[33] = cube[7, 5];
+            cubeTriangulated[34] = cube[3, 5];
+            cubeTriangulated[35] = cube[1, 5];
 
             vertexBuffer = new VertexBuffer(GraphicsDevice, typeof(VertexPositionColor), 36, BufferUsage.WriteOnly);
             vertexBuffer.SetData<VertexPositionColor>(cubeTriangulated);
@@ -169,15 +213,136 @@ namespace _3DPractice
             // Space
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                orbit = !orbit;
-            }
-
-            if(orbit)
-            {
                 Matrix rotationMatrix = Matrix.CreateRotationY(
                     MathHelper.ToRadians(1f));
                 camPosition = Vector3.Transform(camPosition, rotationMatrix);
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad1))
+            {
+                cube[0, 0].Position.X += 1;
+                cube[0, 1].Position.X += 1;
+                cube[0, 2].Position.X += 1;
+                cube[0, 3].Position.X += 1;
+                cube[0, 4].Position.X += 1;
+                cube[0, 5].Position.X += 1;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.Q))
+            {
+                cube[0, 0].Position.X -= 1;
+                cube[0, 1].Position.X -= 1;
+                cube[0, 2].Position.X -= 1;
+                cube[0, 3].Position.X -= 1;
+                cube[0, 4].Position.X -= 1;
+                cube[0, 5].Position.X -= 1;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad2))
+            {
+                cube[1, 0].Position.X += 1;
+                cube[1, 1].Position.X += 1;
+                cube[1, 2].Position.X += 1;
+                cube[1, 3].Position.X += 1;
+                cube[1, 4].Position.X += 1;
+                cube[1, 5].Position.X += 1;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            {
+                cube[1, 0].Position.X -= 1;
+                cube[1, 1].Position.X -= 1;
+                cube[1, 2].Position.X -= 1;
+                cube[1, 3].Position.X -= 1;
+                cube[1, 4].Position.X -= 1;
+                cube[1, 5].Position.X -= 1;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad3))
+            {
+                cube[2, 0].Position.X += 1;
+                cube[2, 1].Position.X += 1;
+                cube[2, 2].Position.X += 1;
+                cube[2, 3].Position.X += 1;
+                cube[2, 4].Position.X += 1;
+                cube[2, 5].Position.X += 1;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.E))
+            {
+                cube[2, 0].Position.X -= 1;
+                cube[2, 1].Position.X -= 1;
+                cube[2, 2].Position.X -= 1;
+                cube[2, 3].Position.X -= 1;
+                cube[2, 4].Position.X -= 1;
+                cube[2, 5].Position.X -= 1;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.NumPad4))
+            {
+                cube[3, 0].Position.X += 1;
+                cube[3, 1].Position.X += 1;
+                cube[3, 2].Position.X += 1;
+                cube[3, 3].Position.X += 1;
+                cube[3, 4].Position.X += 1;
+                cube[3, 5].Position.X += 1;
+            }
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                cube[3, 0].Position.X -= 1;
+                cube[3, 1].Position.X -= 1;
+                cube[3, 2].Position.X -= 1;
+                cube[3, 3].Position.X -= 1;
+                cube[3, 4].Position.X -= 1;
+                cube[3, 5].Position.X -= 1;
+            }
+
+            cubeTriangulated[0] = cube[0, 0];
+            cubeTriangulated[1] = cube[1, 0];
+            cubeTriangulated[2] = cube[3, 0];
+
+            cubeTriangulated[3] = cube[0, 0];
+            cubeTriangulated[4] = cube[2, 0];
+            cubeTriangulated[5] = cube[3, 0];
+
+            cubeTriangulated[6] = cube[0, 1];
+            cubeTriangulated[7] = cube[1, 1];
+            cubeTriangulated[8] = cube[5, 1];
+
+            cubeTriangulated[9] = cube[0, 1];
+            cubeTriangulated[10] = cube[4, 1];
+            cubeTriangulated[11] = cube[5, 1];
+
+            cubeTriangulated[12] = cube[0, 2];
+            cubeTriangulated[13] = cube[2, 2];
+            cubeTriangulated[14] = cube[6, 2];
+
+            cubeTriangulated[15] = cube[0, 2];
+            cubeTriangulated[16] = cube[4, 2];
+            cubeTriangulated[17] = cube[6, 2];
+
+            cubeTriangulated[18] = cube[7, 3];
+            cubeTriangulated[19] = cube[6, 3];
+            cubeTriangulated[20] = cube[2, 3];
+
+            cubeTriangulated[21] = cube[7, 3];
+            cubeTriangulated[22] = cube[3, 3];
+            cubeTriangulated[23] = cube[2, 3];
+
+            cubeTriangulated[24] = cube[7, 4];
+            cubeTriangulated[25] = cube[6, 4];
+            cubeTriangulated[26] = cube[4, 4];
+
+            cubeTriangulated[27] = cube[7, 4];
+            cubeTriangulated[28] = cube[5, 4];
+            cubeTriangulated[29] = cube[4, 4];
+
+            cubeTriangulated[30] = cube[7, 5];
+            cubeTriangulated[31] = cube[5, 5];
+            cubeTriangulated[32] = cube[1, 5];
+
+            cubeTriangulated[33] = cube[7, 5];
+            cubeTriangulated[34] = cube[3, 5];
+            cubeTriangulated[35] = cube[1, 5];
+
+            vertexBuffer.SetData<VertexPositionColor>(cubeTriangulated);
 
             viewMatrix = Matrix.CreateLookAt(camPosition, camTarget, Vector3.Up);
 
@@ -202,18 +367,7 @@ namespace _3DPractice
             foreach(EffectPass pass in basicEffect.CurrentTechnique.Passes)
             {
                 pass.Apply();
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 3, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 6, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 9, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 12, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 15, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 18, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 21, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 24, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 27, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 30, 3);
-                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 33, 3);
+                GraphicsDevice.DrawPrimitives(PrimitiveType.TriangleList, 0, 36);
             }
             
             base.Draw(gameTime);
